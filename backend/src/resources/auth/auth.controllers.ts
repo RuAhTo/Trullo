@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
    * @route POST /auth/login
    */
 
-export async function loginUser(req:Request, res:Response){
+export async function loginUser(req:Request, res:Response): Promise<void>{
     try {
         const { username, password } = req.body;
     
@@ -22,7 +22,8 @@ export async function loginUser(req:Request, res:Response){
         
     
         if (!user || !await bcrypt.compare(password, user.password)) {
-          return res.status(401).json({ error: "Invalid username or password" });
+          res.status(401).json({ error: "Invalid username or password" });
+          return
         }
   
         if (!process.env.JWT_SECRET) {
@@ -37,3 +38,4 @@ export async function loginUser(req:Request, res:Response){
         res.status(500).json({ error: "Login failed!" });
       }
 }
+

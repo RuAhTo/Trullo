@@ -16,12 +16,14 @@ export function verifyToken(req: AuthenticatedRequest, res: Response, next: Next
   console.log('Token:', token);
 
   if (!token) {
-    return res.status(403).send('Access denied');
+    res.status(403).send('Access denied');
+    return
   }
 
   jwt.verify(token, process.env.JWT_SECRET as string, (err, user) => {
     if (err) {
-      return res.status(403).send('Invalid token');
+       res.status(403).send('Invalid token');
+       return
     }
     req.user = user;
     next();

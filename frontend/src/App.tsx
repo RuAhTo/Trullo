@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-
-import './style/style.scss'
-
 import { AuthProvider } from './components/auth/AuthProvider'
+
+//Pages
+import Homepage from './pages/Homepage'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Dashboard from './pages/Dashboard'
 
 function App() {
 
@@ -11,10 +14,10 @@ function App() {
     <>
     <AuthProvider>
       <Routes>
-        <Route path='/'/>
-        <Route path='/login'/>
-        <Route path='/register'/>
-        <Route path='/dashboard'/>
+        <Route path='/' element={<Homepage/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/register' element={<Register/>}/>
+        <Route path='/dashboard' element={<Dashboard/>}/>
       </Routes>
     </AuthProvider>
     </>

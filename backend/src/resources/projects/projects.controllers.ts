@@ -15,8 +15,7 @@ export async function getUserProjects(req: Request, res: Response): Promise<void
         res.status(400).json({ message: 'Invalid user ID.' });
         return;
     }
-
-
+    
     try {
         const projects = await prisma.project.findMany({
             where: {
