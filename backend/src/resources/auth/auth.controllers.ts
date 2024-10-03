@@ -13,6 +13,9 @@ const prisma = new PrismaClient();
    */
 
 export async function loginUser(req:Request, res:Response): Promise<void>{
+  
+
+
     try {
         const { username, password } = req.body;
     

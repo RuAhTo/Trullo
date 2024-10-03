@@ -10,17 +10,14 @@ header{
     justify-content: flex-start;
 }
 
-// Centrera body
 main {
     @include mixins.flex-center;
 }
 
-// Container med gemensamma stilar
 .auth-container {
     @include mixins.window-container;
 }
 
-// Auth form container
 .auth-form-container {
     display: flex;
     flex-direction: column;
@@ -56,7 +53,6 @@ main {
                 outline: 2px solid black;
             }
 
-            // Specifik stil för lösenordsfält
             &.password {
                 font-size: 24px;
             }
@@ -64,7 +60,6 @@ main {
     }
 }
 
-// Auth button container
 .auth-btn-container {
     display: flex;
     flex-direction: column;
@@ -95,7 +90,6 @@ main {
     }
 }
 
-// Auth link container
 .auth-link-container {
     display: flex;
     flex-direction: column;
