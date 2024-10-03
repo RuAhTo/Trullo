@@ -1,4 +1,5 @@
 @use '../components/index';
+@use '../components/mixins' as *;
 
 body {
     padding: 0;

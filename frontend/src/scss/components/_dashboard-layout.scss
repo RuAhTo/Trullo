@@ -1,0 +1,43 @@
+@use './mixins';
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.top-section{
+    padding: 1rem;
+    width: 100%;
+    height: 25vh;
+    @include mixins.flex-center;
+}
+
+.top-current-container{
+    @include mixins.window-container;
+    width: 98%;
+    height: 100%;
+}
+
+.bottom-section-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: .8rem;
+    height: 75vh;
+}
+.bottom-section{
+    @include mixins.flex-center;
+}
+
+.current-container{
+    @include mixins.window-container;
+    height: 95%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+
+    h3{
+        margin-bottom: 1rem;
+    }
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import '../scss/pages/_Dashboard.scss';
+import DashboardCard from '../components/cards/ProjectCard'
 
 function Dashboard() {
   return (
@@ -20,13 +21,20 @@ function Dashboard() {
         </section>
         <div className="bottom-section-container">
           <section className='bottom-section'>
-            <div className="current-container">Projects</div>
+            <div className="current-container">
+              <h3>Current Projects</h3>
+              <DashboardCard/>
+            </div>
           </section>
           <section className='bottom-section'>
-            <div className="current-container">Tasks</div>
+            <div className="current-container">
+            <h3>Upcoming Task Deadlines</h3>
+            </div>
           </section>
           <section className='bottom-section'>
-            <div className="current-container">Teams</div>
+            <div className="current-container">
+              <h3>Your Teams</h3>
+            </div>
           </section>
         </div>
       </main>
