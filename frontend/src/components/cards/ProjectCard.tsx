@@ -13,7 +13,7 @@ function Card() {
             <p>This is a project you have.</p>
         </div>
         <div className='piechart-container'>
-            <Pie percentage={75} colour="#134074" />
+            <Pie percentage={42} colour="#134074" />
         </div>
       </div>
     </div>

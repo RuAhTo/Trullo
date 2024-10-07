@@ -7,6 +7,7 @@ import Homepage from './pages/Homepage'
 import Login from './pages/Login'
 import RegisterUser from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import Projects from './pages/Projects'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<RegisterUser/>}/>
         <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path='/projects' element={<Projects/>}/>
       </Routes>
     </AuthProvider>
     </>

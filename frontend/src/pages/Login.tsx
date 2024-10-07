@@ -46,7 +46,7 @@ function Login() {
             login(data.token);
             localStorage.setItem('token', data.token);
             localStorage.setItem('userId', data.id);
-            navigate('/');
+            navigate('/dashboard');
 
         } else if (response.status === 401) {
             setFormError('Incorrect username or password. Please try again.');
