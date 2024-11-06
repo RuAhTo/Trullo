@@ -7,7 +7,6 @@ import axios from 'axios';
 function RegisterUser() {
 
     const [name, setName] = useState('');
-    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +21,7 @@ function RegisterUser() {
     const handleSingup = async (e: React.FormEvent)=> {
         e.preventDefault();
 
-        if (!username || !password || !email) {
+        if ( !password || !email) {
             setFormError('Please enter all the fields');
             setButtonShake(true);
             setTimeout(() => setButtonShake(false),500);
@@ -41,13 +40,11 @@ function RegisterUser() {
 
         try {
             console.log({
-                username: username,
                 password: password,
                 email: email,
                 name: name,
             });
             const response = await axios.post('http://localhost:3000/trullodb/users', {
-                username: username,
                 password: password,
                 email: email,
                 name: name,
@@ -60,6 +57,7 @@ function RegisterUser() {
             if (response.status === 201) {
                 const data = response.data;
                 console.log('response ok', data);
+                navigate('/login')
             } else {
                 throw new Error('Something went wrong ¯\\_(ツ)_/¯');
                 
@@ -94,13 +92,13 @@ function RegisterUser() {
                     />
                 </div>
                 <div className="auth-input-container">
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="email">Email</label>
                     <input 
-                        value={username}
-                        type="text" 
-                        name="username" 
-                        id="usernameInput" 
-                        onChange={(e) => setUsername(e.target.value)}
+                        type="email" 
+                        name="email" 
+                        id="emailInput" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div className="auth-input-container">
@@ -130,16 +128,6 @@ function RegisterUser() {
                         />
                         <label htmlFor="">Show password</label>
                     </div>
-                </div>
-                <div className="auth-input-container">
-                    <label htmlFor="email">Email</label>
-                    <input 
-                        type="email" 
-                        name="email" 
-                        id="emailInput" 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
                 </div>
                 <div className="auth-btn-container">
                     <button

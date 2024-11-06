@@ -8,7 +8,7 @@ function Login() {
 
     const { login } = useAuth();
     const navigate = useNavigate(); // Använd useNavigate för att navigera
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false)
     const [buttonShake, setButtonShake] = useState(false);
@@ -24,7 +24,7 @@ function Login() {
       setLoading(true)
       setFormError('');
 
-      if (!username || !password) {
+      if (!email || !password) {
         setFormError('Please enter your username and password')
         setButtonShake(true)
         setTimeout(() => setButtonShake(false), 500);
@@ -33,7 +33,7 @@ function Login() {
 
       try {
         const response = await axios.post('http://localhost:3000/trullodb/auth/login', {
-            username: username,
+            email: email,
             password: password
         }, {
             headers: {
@@ -91,11 +91,11 @@ function Login() {
             <h2>Log In</h2>
             <form className='auth-form-container' onSubmit={handleLogin}>
                 <div className="auth-input-container" >
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">Email</label>
                     <input 
                       type="text" 
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div className=" auth-input-container">
