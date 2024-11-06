@@ -56,11 +56,13 @@ export async function getProjectTasks(req: AuthenticatedRequest, res: Response) 
 }
 
 //POST todos
-export async function createTodo(req: Request, res: Response) {
+export async function createTask(req: Request, res: Response) {
   try {
+    const id = 
     const { title, description, status, finishedBy } = req.body;
 
     const newTodo = await prisma.task.create({
+      where: { id: Number(id) },
       data: {
         title,
         description,
@@ -81,7 +83,7 @@ export async function createTodo(req: Request, res: Response) {
 }
 
 //Delete todo
-export async function deleteTodo(req: Request, res: Response) {
+export async function deleteTask(req: Request, res: Response) {
   try {
     const { id } = req.params;
 
@@ -90,7 +92,7 @@ export async function deleteTodo(req: Request, res: Response) {
       return res.status(400).json({ error: "Invalid ID parameter!" });
     }
 
-    const deletedTodo = await prisma.todos.delete({
+    const deletedTodo = await prisma.task.delete({
       where: { id: Number(id) }, 
     });
 
@@ -107,17 +109,16 @@ export async function deleteTodo(req: Request, res: Response) {
 }
 
 //Update todo
-export async function updateTodo(req: Request, res: Response) {
+export async function updateTask(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const { title, content, color, status } = req.body;
+    const { title, description, status } = req.body;
 
-    const updatedTodo = await prisma.todos.update({
+    const updatedTodo = await prisma.task.update({
       where: { id: Number(id) },
       data: {
         title,
-        content,
-        color,
+        description,
         status,
       },
     });
@@ -132,12 +133,12 @@ export async function updateTodo(req: Request, res: Response) {
 }
 
 //Update only status of todo
-export async function updatePartialTodo(req: Request, res: Response) {
+export async function updatePartialTask(req: Request, res: Response) {
   const { id } = req.params;
   const { status } = req.body;
 
   try {
-    const updatedTodo = await prisma.todos.update({
+    const updatedTodo = await prisma.task.update({
       where: { id: Number(id) },
       data: { status },
     });

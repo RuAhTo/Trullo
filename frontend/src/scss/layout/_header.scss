@@ -1,0 +1,15 @@
+@forward '../abstract/index';
+
+header {
+    padding-bottom: var(--spacing-large);
+    background-color: var(--color-secondary);
+    color: white;
+    margin: 0 2rem;
+    width: calc(100% - 2rem);
+    
+    // Responsive header
+    @media (max-width: 480px) {
+      flex-direction: column;
+      text-align: center;
+    }
+  }

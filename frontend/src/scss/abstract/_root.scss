@@ -1,21 +1,71 @@
-@use './font' as *;
-@use './colors' as *;
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Alegreya:ital,wght@0,400..900;1,400..900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Kavivanar&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alatsi&display=swap');
 
+:root {
+  // Color Palette
+  --color-primary: #3888ff;
+  --color-background: #3888ff;
+  --color-text: #1a1a1a;
+  --color-border: rgb(171, 171, 171);
+  
+  // Typography
+  --font-base: Alata, sans-serif;
+  --font-size-base: 18px;
+  --line-height-base: 1.6;
+  
+  // Spacing
+  --spacing-small: 0.5rem;
+  --spacing-medium: 1rem;
+  --spacing-large: 2rem;
 
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-    min-height: 100vh;
-    width: calc(100% - 2rem);
-    font-family: $mainfont;
-    background-color: $primary;
-    margin: 0 auto;
-    padding: 0 1rem;
+  // Border-radius
+  --border-radius-small: .4rem;
+  
+  // Breakpoints
+  @media (min-width: 768px) {
+    --font-size-base: 20px;
   }
   
+  @media (min-width: 1024px) {
+    --font-size-base: 22px;
+  }
+}
+
+*, 
+*::before, 
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-base);
+    line-height: var(--line-height-base);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    background-color: var(--color-background);
+
+    
+    // Smooth font rendering
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    // Prevent unnecessary scrollbars
+    overflow-x: hidden;
+  }
+
+  // Accessibility and Print Styles
+@media print {
+    body {
+      font-size: 12pt;
+      color: black;
+      background: white;
+    }
+  }

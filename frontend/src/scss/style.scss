@@ -1,4 +1,6 @@
-//Abstract
+@forward './abstract/index';
+@forward './components/index';
+@forward './pages/index';
 
-
-// Pages
+@forward './layout/main';
+@forward './layout/header';

@@ -1,0 +1,16 @@
+@forward '../abstract/index';
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-medium);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    // Responsive padding
+    @media (max-width: 480px) {
+      padding: var(--spacing-small);
+    }
+  }
