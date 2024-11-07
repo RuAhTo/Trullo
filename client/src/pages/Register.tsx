@@ -67,11 +67,8 @@ function RegisterUser() {
         } finally {
             setLoading(false);
         }
-        
     }
-
-
-
+    
   return (
     <>
     <header>
