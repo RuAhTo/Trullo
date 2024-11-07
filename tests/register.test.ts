@@ -10,5 +10,4 @@ test('user can create account', async ({ page }) => {
   await page.fill('input[name="password"]', 'password123');
   await page.fill('input[name="confirmPassword"]', 'password123');
   await page.click('button[type="submit"]');
-
 });
