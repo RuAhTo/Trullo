@@ -115,7 +115,7 @@ function RegisterUser() {
                     <label htmlFor="confirm-password">Confirm password</label>
                     <input
                         type={showPassword ? "text" : "password"}
-                        name="password"
+                        name="confirmPassword"
                         id="confirmPasswordInput"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
