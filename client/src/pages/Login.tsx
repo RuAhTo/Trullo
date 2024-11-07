@@ -58,7 +58,7 @@ function Login() {
             setFormError('Something went wrong. Please try again later.');
         }
 
-    } catch (error) {
+    } catch (error:any) {
         console.error('Error:', error);
         if (error.response) {
 
@@ -78,8 +78,6 @@ function Login() {
         setTimeout(() => setButtonShake(false), 500);
     }
   }
-    
-
 
   return (
     <>
@@ -91,10 +89,11 @@ function Login() {
             <h2>Log In</h2>
             <form className='auth-form-container' onSubmit={handleLogin}>
                 <div className="auth-input-container" >
-                    <label htmlFor="username">Email</label>
+                    <label htmlFor="email">Email</label>
                     <input 
-                      type="text" 
+                      type="email" 
                       value={email}
+                      name='email'
                       onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
@@ -117,13 +116,19 @@ function Login() {
                     </div>
                 </div>
                 <div className="auth-btn-container">
-                    <button>Log in</button>
-                    <p>{formError}</p>
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className={buttonShake ? 'shake-horizontal' : ''}
+                    >
+                {loading ? 'Loading...' : 'Login'}
+                </button>
+                <p>{formError}</p>
             </div>
             </form>
-          <div className='auth-link-container'>
-              <p>Not a member?</p>
-              <Link to="/register">Click here!</Link>
+            <div className='auth-link-container'>
+            <p>Not a member?</p>
+            <Link to="/register">Click here!</Link>
           </div>
         </div>
     </main>

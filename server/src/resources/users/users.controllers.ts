@@ -67,9 +67,9 @@ export async function getUser(req:Request, res:Response): Promise<void> {
 
 export async function createUser(req: Request, res: Response): Promise<void> {
     try {
-        const { username, password, email, name } = req.body;
+        const { password, email, name } = req.body;
 
-        if (!username || !password || !email || !name) {
+        if (!password || !email || !name) {
             res.status(400).json({ message: 'All fields are required.' });
             return
         }
@@ -78,32 +78,23 @@ export async function createUser(req: Request, res: Response): Promise<void> {
             where: { email: email }
         });
 
-        const existingUsername = await prisma.user.findUnique({
-            where: { username: username }
-        });
-
         if (existingEmail) {
             res.status(400).json({ message: 'User with this email already exists' });
             return
         }
-        if (existingUsername) {
-            res.status(400).json({ message: 'This username is already in use' });
-            return
-        }
-
+        
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         const newUser = await prisma.user.create({
             data: {
-                username: username,
                 password: hashedPassword,
                 name: name,
                 email: email,
             }
         });
 
-        res.status(201).json({ id: newUser.id, message: 'User created!', username: newUser.username });
+        res.status(201).json({ id: newUser.id, message: 'User created!', email: newUser.email });
         return
     } catch (error) {
         console.error('Error details:', error);
@@ -120,14 +111,13 @@ export async function createUser(req: Request, res: Response): Promise<void> {
 export async function updateUser(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const { username, password, email, name } = req.body;
+      const {password, email, name } = req.body;
 
       const hashedPassword = await bcrypt.hash(password, 10);
   
       const updatedUser = await prisma.user.update({
         where: { id: Number(id) },
         data: {
-          username,
           password: hashedPassword,
           email,
           name,

@@ -22,8 +22,9 @@ jobs:
           node-version: '18'  # Choose the Node.js version for your project
 
       # Install dependencies for the client
-      - name: Install dependencies (Client)
+      - name: Install dependencies
         run: |
+          npm install
           cd client
           npm install  # Install client dependencies
 
