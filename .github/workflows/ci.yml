@@ -28,15 +28,13 @@ jobs:
           npm install  # Install client dependencies
 
       # Install Playwright browsers for the client
-      - name: Install Playwright Browsers (Client)
+      - name: Install Playwright Browsers
         run: |
-          cd client
           npx playwright install
 
       # Run Playwright tests for the client
-      - name: Run Playwright tests (Client)
+      - name: Run Playwright tests
         run: |
-          cd client
           npx playwright test
 
       # Build the client project (optional)
@@ -50,13 +48,6 @@ jobs:
         run: |
           cd server
           npm install  # Install server dependencies
-
-      # Run Playwright tests for the server (if needed)
-      - name: Run Playwright tests (Server)
-        run: |
-          cd server
-          npx playwright install  # If you need Playwright tests for the server, run it here
-          npx playwright test     # Adjust if you have specific server-side tests
 
       # Build the server project (optional)
       - name: Build the project (Server)
