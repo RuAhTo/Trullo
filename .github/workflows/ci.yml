@@ -33,17 +33,6 @@ jobs:
         run: |
           npx playwright install
 
-      # Run Playwright tests for the client
-      - name: Run Playwright tests
-        run: |
-          npx playwright test
-
-      # Build the client project (optional)
-      - name: Build the project (Client)
-        run: |
-          cd client
-          npm run build  # Build client (optional, check if it runs without issues)
-
       # Install dependencies for the server
       - name: Install dependencies (Server)
         run: |
@@ -55,3 +44,26 @@ jobs:
         run: |
           cd server
           npm run build  # Build server (optional, check if it runs without issues)
+
+      # Start the server in the background
+      - name: Start server
+        run: |
+          cd server
+          nohup npm start &  # Start the server in the background
+
+      # Optionally, wait for the server to be fully up and running (adjust for your specific use case)
+      - name: Wait for server to be ready
+        run: |
+          # Wait for the server to be ready, replace with the actual URL of your server
+          curl --silent --fail http://localhost:5173 || exit 1
+
+      # Run Playwright tests for the client
+      - name: Run Playwright tests
+        run: |
+          npx playwright test
+
+      # Build the client project (optional)
+      - name: Build the project (Client)
+        run: |
+          cd client
+          npm run build  # Build client (optional, check if it runs without issues)
