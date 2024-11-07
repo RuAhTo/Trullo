@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to the main branch
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Choose the Node.js version for your project
+
+      # Install dependencies for the client
+      - name: Install dependencies (Client)
+        run: |
+          cd client
+          npm install  # Install client dependencies
+
+      # Install Playwright browsers for the client
+      - name: Install Playwright Browsers
+        run: |
+          npx playwright install
+
+      # Run Playwright tests for the client
+      - name: Run Playwright tests
+        run: |
+          npx playwright test
+
+      # Build the client project (optional)
+      - name: Build the project (Client)
+        run: |
+          cd client
+          npm run build  # Build client (optional, check if it runs without issues)
+
+      # Install dependencies for the server
+      - name: Install dependencies (Server)
+        run: |
+          cd server
+          npm install  # Install server dependencies
+
+      # Build the server project (optional)
+      - name: Build the project (Server)
+        run: |
+          cd server
+          npm run build  # Build server (optional, check if it runs without issues)
