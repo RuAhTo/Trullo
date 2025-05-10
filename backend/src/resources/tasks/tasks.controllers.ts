@@ -35,12 +35,15 @@ export async function getProjectTasks(req: AuthenticatedRequest, res: Response) 
   try {
     const user = req.user as JwtPayload;
     const userId = user.id;
+    const { id: projectId } = req.params;
 
     const tasks = await prisma.task.findMany({
       where: {
         authorId: userId,
+        projectId: Number(projectId),
       },
     });
+
 
     if (!tasks.length) {
       return res.status(404).json({ message: "No tasks found for this project" });
@@ -58,16 +61,16 @@ export async function getProjectTasks(req: AuthenticatedRequest, res: Response) 
 //POST todos
 export async function createTask(req: Request, res: Response) {
   try {
-    const id = 
-    const { title, description, status, finishedBy } = req.body;
+    const id = req.params;
+    const { title, description, status, finishedBy, authorId } = req.body;
 
     const newTodo = await prisma.task.create({
-      where: { id: Number(id) },
       data: {
         title,
         description,
         status,
         finishedBy,
+        authorId,
       },
     });
 
