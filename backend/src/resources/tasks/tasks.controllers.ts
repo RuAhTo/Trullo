@@ -88,7 +88,7 @@ export async function getSpecificTask(req: Request, res: Response): Promise<void
 
 /**
  * @description Get all user tasks
- * @route GET /users/:id/tasks/
+ * @route GET /users/tasks/
  */
 
 export async function getUserTasks(req: AuthenticatedRequest, res: Response): Promise<void> {
@@ -100,10 +100,10 @@ export async function getUserTasks(req: AuthenticatedRequest, res: Response): Pr
       where: { authorId: userId },
     });
 
-    // if (!tasks.length) {
-    //   res.status(404).json({ message: "No tasks found for this user." });
-    //   return;
-    // }
+    if (!tasks.length) {
+      res.status(404).json({ message: "No tasks found for this user." });
+      return;
+    }
 
     res.status(200).json({ tasks });
   } catch (error) {

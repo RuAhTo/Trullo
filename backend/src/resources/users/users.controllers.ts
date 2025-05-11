@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client"
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
+import { AuthenticatedRequest } from "../../middleware/authMiddleware";
+import { JwtPayload } from "jsonwebtoken";
 
 dotenv.config();
 const prisma = new PrismaClient();
@@ -114,25 +116,27 @@ export async function createUser(req: Request, res: Response): Promise<void> {
 
 /**
  * @description Update user
- * @route PUT /users/:id
+ * @route PUT /users
  */
 
-export async function updateUser(req: Request, res: Response) {
+export async function updateUser(req: AuthenticatedRequest, res: Response) {
     try {
-      const { id } = req.params;
-      const { username, password, email, name } = req.body;
+        const user = req.user as JwtPayload;
+        const userId = user.id;
 
-      const hashedPassword = await bcrypt.hash(password, 10);
-  
-      const updatedUser = await prisma.user.update({
-        where: { id: Number(id) },
-        data: {
-          username,
-          password: hashedPassword,
-          email,
-          name,
-        },
-      });
+        const { username, password, email, name } = req.body;
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const updatedUser = await prisma.user.update({
+            where: { id: Number(userId) },
+            data: {
+            username,
+            password: hashedPassword,
+            email,
+            name,
+            },
+        });
   
       res.status(200).json({ message: "User updated!", user: updatedUser });
     } catch (error) {
@@ -143,20 +147,21 @@ export async function updateUser(req: Request, res: Response) {
   
   /**
    * @description Delete user
-   * @route DELETE /users/:id
+   * @route DELETE /users
    */
 
-  export async function deleteUser(req: Request, res: Response) {
+  export async function deleteUser(req: AuthenticatedRequest, res: Response) {
     try {
-      const { id } = req.params;
+        const user = req.user as JwtPayload;
+        const userId = user.id;
   
-      const deletedUser = await prisma.user.delete({
-        where: { id: Number(id) },
-      });
-  
-      res.status(200).json({ message: "User deleted!", user: deletedUser });
+        const deletedUser = await prisma.user.delete({
+            where: { id: Number(userId) },
+        });
+    
+        res.status(200).json({ message: "User deleted!", user: deletedUser });
     } catch (error) {
-      console.error("Error details:", error);
-      res.status(500).json({ error: "Database query failed!" });
+    console.error("Error details:", error);
+    res.status(500).json({ error: "Database query failed!" });
     }
   }
