@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import usersRouter from './resources/users/users.routes';
-import projectsRouter from './resources/projects/projects.routes';
+import projectsRouter from './resources/unimplemented/projects/projects.routes';
 import authRouter from './resources/auth/auth.routes';
 import tasksRouter from './resources/tasks/tasks.routes';
 

@@ -4,7 +4,7 @@ import { prisma } from '../../src/utils/prisma';
 const JWT_SECRET = process.env.JWT_SECRET || 'test_secret';
 
 export async function createTestUserAndToken() {
-    const unique = Date.now(); // Ensures uniqueness
+    const unique = Date.now();
     const email = `test-${unique}@example.com`;
     const username = `testuser-${unique}`;
     const password = 'myplaintextpassword';
