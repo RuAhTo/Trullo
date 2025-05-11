@@ -10,14 +10,15 @@ const prisma = new PrismaClient();
  * @route GET /tasks
  */
 
-export async function getTasks(req: Request, res: Response) {
+export async function getTasks(req:Request, res: Response): Promise<void> {
   try {
     const todos = await prisma.task.findMany();
 
     if (!todos.length)
-      return res.status(404).json({ message: "No tasks found" });
-
-    res.status(200).json(todos);
+      res.status(404).json({ message: "No tasks found" });
+    
+      res.status(200).json(todos);
+      return;
   } catch (error) {
     console.error("Error details:", error);
     res.status(500).json({ error: "Database query failed!" });
@@ -31,7 +32,7 @@ export async function getTasks(req: Request, res: Response) {
  * @route GET /project/:id/tasks
  */
 
-export async function getProjectTasks(req: AuthenticatedRequest, res: Response) {
+export async function getProjectTasks(req: AuthenticatedRequest, res: Response): Promise<void> {
   try {
     const user = req.user as JwtPayload;
     const userId = user.id;
@@ -46,7 +47,8 @@ export async function getProjectTasks(req: AuthenticatedRequest, res: Response) 
 
 
     if (!tasks.length) {
-      return res.status(404).json({ message: "No tasks found for this project" });
+      res.status(404).json({ message: "No tasks found for this project" });
+      return 
     }
 
     res.status(200).json(tasks);
@@ -58,10 +60,61 @@ export async function getProjectTasks(req: AuthenticatedRequest, res: Response) 
   }
 }
 
+/**
+ * @description Get specific tasks
+ * @route GET /tasks/:id
+ */
+
+export async function getSpecificTask(req: Request, res: Response): Promise<void>{
+  try {
+    const { id: tasksid } = req.params;
+    const task = await prisma.task.findUnique({
+      where: {
+        id: Number(tasksid)
+      },
+    });
+
+    if (task == null){
+      res.status(404).json({ message: "No tasks with this id found." });
+      return 
+    }
+  res.status(200).json(task);
+
+  } catch (error){
+    console.error("Error details:", error);
+    res.status(500).json({ error: "Database query failed!" });
+  }
+}
+
+/**
+ * @description Get all user tasks
+ * @route GET /users/:id/tasks/
+ */
+
+export async function getUserTasks(req: AuthenticatedRequest, res: Response): Promise<void> {
+  try {
+    const user = req.user as JwtPayload;
+    const userId = user.id;
+
+    const tasks = await prisma.task.findMany({
+      where: { authorId: userId },
+    });
+
+    // if (!tasks.length) {
+    //   res.status(404).json({ message: "No tasks found for this user." });
+    //   return;
+    // }
+
+    res.status(200).json({ tasks });
+  } catch (error) {
+    console.error("Error retrieving user tasks:", error);
+    res.status(500).json({ error: "Internal server error." });
+  }
+}
+
 //POST todos
 export async function createTask(req: Request, res: Response) {
   try {
-    const id = req.params;
     const { title, description, status, finishedBy, authorId } = req.body;
 
     const newTodo = await prisma.task.create({
@@ -69,14 +122,13 @@ export async function createTask(req: Request, res: Response) {
         title,
         description,
         status,
-        finishedBy,
         authorId,
       },
     });
 
     res
       .status(201)
-      .json({ id: newTodo.id, message: "Todo created!", title: newTodo.title, status: newTodo.status, authorId: newTodo.authorId, color: newTodo.color, content: newTodo.content });
+      .json({ id: newTodo.id, message: "Todo created!", title: newTodo.title, status: newTodo.status, authorId: newTodo.authorId });
   } catch (error) {
     console.error("Error details:", error);
     res.status(500).json({ error: "Database query failed!" });
@@ -86,22 +138,22 @@ export async function createTask(req: Request, res: Response) {
 }
 
 //Delete todo
-export async function deleteTask(req: Request, res: Response) {
+export async function deleteTask(req: Request, res: Response): Promise<void> {
   try {
     const { id } = req.params;
 
-    // Kontrollera att id:t är ett giltigt nummer
     if (isNaN(Number(id))) {
-      return res.status(400).json({ error: "Invalid ID parameter!" });
+      res.status(400).json({ error: "Invalid ID parameter!" });
+      return;
     }
 
     const deletedTodo = await prisma.task.delete({
       where: { id: Number(id) }, 
     });
 
-    // Om ingen todo hittas med det specifika id:t
     if (!deletedTodo) {
-      return res.status(404).json({ error: "Todo not found!" });
+      res.status(404).json({ error: "Todo not found!" });
+      return;
     }
 
     res.status(200).json({ message: "Todo deleted!", todo: deletedTodo });

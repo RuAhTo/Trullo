@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
  * @route GET /users
  */
 
-export async function getUsers(req:Request, res:Response): Promise<void> {
+export async function getUsers(req: Request, res:Response): Promise<void> {
     try {
         const users = await prisma.user.findMany();
 
@@ -20,7 +20,7 @@ export async function getUsers(req:Request, res:Response): Promise<void> {
             return
         }
 
-        res.status(200).json(users);
+        res.status(200).json({users});
     } catch (error){
         console.error('Error details:', error)
         res.status(500).json({ error: 'Database query failed.', details: error });
